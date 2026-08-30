@@ -7,7 +7,9 @@ User-centered (not conversation-centered). Provenance-or-bust. Built on boring i
 
 > *Your AI is only as smart as what it remembers about you.*
 
-![Chat context before and after knowledge-worker memory](https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/chat-dif-image.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/chat-dif-image.png" alt="Chat context before and after knowledge-worker memory">
+</p>
 
 `knowledge-worker` is a local-first personal knowledge graph for carrying context across AI sessions. It turns notes into reviewable concepts, decisions, goals, and relationships, keeps source excerpts attached, and exports compact context you can paste into Claude, GPT, Ollama, or any other LLM workflow.
 
@@ -80,7 +82,9 @@ mykg summary
 
 Graph memory is promoted through a review lifecycle:
 
-![Source note to candidates to validate to review to merge](https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/process-flow.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/process-flow.png" alt="Source note to candidates to validate to review to merge">
+</p>
 
 ```text
 source note
