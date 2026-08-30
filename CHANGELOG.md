@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.2
+
+- Removed the ecosystem cross-link header so the README opens on the project
+  heading.
+- Added a chat-context comparison image and a process-flow diagram, and moved
+  the graph visualizer demo down to "What It Does".
+- Pointed README images at absolute raw URLs so they render on the PyPI project
+  page as well as on GitHub.
+
 ## 0.8.1
 
 - Reworked the README: moved "What It Does" and "How Memory Enters The Graph"

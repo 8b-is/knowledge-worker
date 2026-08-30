@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "knowledge-worker"
-version = "0.8.1"
+version = "0.8.2"
 description = "Provenance-backed personal knowledge graph for local AI workflows"
 readme = "README.md"
 license = "MIT"

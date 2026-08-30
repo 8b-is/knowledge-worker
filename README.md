@@ -7,9 +7,7 @@ User-centered (not conversation-centered). Provenance-or-bust. Built on boring i
 
 > *Your AI is only as smart as what it remembers about you.*
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/knowledge-worker-demo.gif" alt="knowledge-worker graph visualizer demo" width="900">
-</p>
+![Chat context before and after knowledge-worker memory](https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/chat-dif-image.png)
 
 `knowledge-worker` is a local-first personal knowledge graph for carrying context across AI sessions. It turns notes into reviewable concepts, decisions, goals, and relationships, keeps source excerpts attached, and exports compact context you can paste into Claude, GPT, Ollama, or any other LLM workflow.
 
@@ -62,6 +60,10 @@ mykg summary
 
 ## What It Does
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/knowledge-worker-demo.gif" alt="knowledge-worker graph visualizer demo" width="900">
+</p>
+
 - Ingests markdown notes (generated from AI skill)  into candidate graph nodes and edges.
 - Generates pre-ingest deep-dive workspaces for sources that need synthesis
   before graph promotion.
@@ -73,9 +75,12 @@ mykg summary
   claims, and provenance coverage.
 - Generates an offline HTML graph viewer for exploration and demos.
 
+
 ### How Memory Enters The Graph
 
 Graph memory is promoted through a review lifecycle:
+
+![Source note to candidates to validate to review to merge](https://raw.githubusercontent.com/rahulmranga/knowledge-worker/main/docs/assets/process-flow.png)
 
 ```text
 source note
@@ -186,26 +191,6 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ## Use Your Own Notes
 
 You can ingest your notes with or without an API key.
-
-### How Memory Enters The Graph
-
-Graph memory is promoted through a review lifecycle:
-
-```text
-source note
-  -> candidates.json
-  -> validate
-  -> review
-  -> merge accepted items into MYGRAPH_PATH
-```
-
-Candidates are proposals, not memory. Validation checks schema, IDs,
-provenance excerpts, and edge endpoints. Review is the promotion gate. The
-active graph changes only after accepted candidates are merged.
-
-The product contract is:
-
-> The model proposes. Artifacts expose reasoning. Provenance verifies. Human review promotes.
 
 ### Claude or Codex App, No API Key
 
