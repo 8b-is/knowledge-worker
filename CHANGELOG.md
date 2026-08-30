@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1
+
+- Reworked the README: moved "What It Does" and "How Memory Enters The Graph"
+  after Quick Start, documented the app-session (no API key) candidates flow,
+  and simplified the install commands.
+- Added `llm.txt`, an llms.txt-style summary of the project principles and
+  entry points for AI assistants.
+
 ## 0.8.0
 
 - Accepted the v0.8.0 storage direction: JSON-LD becomes canonical, JSONL

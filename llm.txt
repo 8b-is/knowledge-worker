@@ -1,0 +1,24 @@
+# Knowledge Worker
+
+> local-first knowledge graph for durable AI-assistant memory · https://github.com/rahulmranga/knowledge-worker .
+
+
+## Principles
+- **Provenance first.** Every durable claim points back to a source document and literal excerpt.
+
+- **Local first.** The graph is a file on users machine. No cloud sync, accounts, or telemetry.
+
+- **Review before merge.** The LLM proposes. The user decides. Deterministic validation runs before anything enters the graph.
+
+- **Boring persistence.** Compact JSON-LD until it becomes the limiting factor. The schema stays stable across storage backends.
+
+- **Open-web storage.** Local JSON-LD is the source of truth; JSONL records
+capture history, and Turtle/RDF exports let the graph participate in linked-data
+workflows without moving private memory into a hosted system.
+
+## Maintained by: 
+- Rahul Rangarao · [GitHub](https://github.com/rahulmranga) . [Website](www.rahulrangarao.dev)
+
+## File format supported:
+- [JSON](https://www.json.org/)
+- [JSON-LD](https://json-ld.org/)

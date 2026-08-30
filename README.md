@@ -34,42 +34,6 @@ Stop dumping context. Build memory. `knowledge-worker` turns chats, notes, decis
 
 `knowledge-worker` keeps the useful parts: cited claims, explicit relationships, human review, and a small context snapshot when you need continuity.
 
-## How It Compares
-
-`knowledge-worker` is personal AI memory with source-backed claims, not a team
-chat-to-wiki system. It keeps reasoning local, reviewable, and tied to literal
-provenance excerpts before claims become durable graph knowledge.
-
-See [Competitive Analysis](docs/COMPETITIVE_ANALYSIS.md) for the category
-matrix and [Benchmarks](docs/BENCHMARKS.md) for the offline demo-graph checks.
-
-## What It Does
-
-- Ingests markdown notes into candidate graph nodes and edges.
-- Generates pre-ingest deep-dive workspaces for sources that need synthesis
-  before graph promotion.
-- Requires provenance excerpts before claims become durable memory.
-- Lets you review, accept, reject, or edit LLM proposals before merge.
-- Searches by term, lists nodes by type, and finds paths between ideas.
-- Exports an LLM-ready context snapshot for a fresh chat session.
-- Audits memory shape with PageRank, betweenness, k-core, communities, weak
-  claims, and provenance coverage.
-- Generates an offline HTML graph viewer for exploration and demos.
-
-## Design Principles
-
-**Provenance first.** Every durable claim points back to a source document and literal excerpt.
-
-**Local first.** The graph is a file on your machine. No cloud sync, accounts, or telemetry.
-
-**Review before merge.** The LLM proposes. You decide. Deterministic validation runs before anything enters the graph.
-
-**Boring persistence.** Compact JSON-LD until it becomes the limiting factor. The schema stays stable across storage backends.
-
-**Open-web storage.** Local JSON-LD is the source of truth; JSONL records
-capture history, and Turtle/RDF exports let the graph participate in linked-data
-workflows without moving private memory into a hosted system.
-
 ## Quick Start
 
 Requirements: Python 3.10+ on macOS, Linux, or Windows.
@@ -80,12 +44,12 @@ The core CLI has no runtime dependencies beyond the standard library. Optional
 extras pull in LLM backends and RDF export only when you need them:
 
 ```bash
-python -m pip install knowledge-worker               # core CLI, stdlib only (mykg / mygraph)
-python -m pip install "knowledge-worker[rdf]"        # + Turtle/RDF export (rdflib)
-python -m pip install "knowledge-worker[anthropic]"  # + Claude-backed ingest
-python -m pip install "knowledge-worker[openai]"     # + OpenAI-backed ingest
-python -m pip install "knowledge-worker[ollama]"     # + local Ollama ingest
-python -m pip install "knowledge-worker[all]"        # all ingest backends + RDF exports
+pip install knowledge-worker                # core CLI, stdlib only (mykg / mygraph) 
+pip install "knowledge-worker[rdf]"        # + Turtle/RDF export (rdflib)
+pip install "knowledge-worker[anthropic]"  # + Claude-backed ingest
+pip install "knowledge-worker[openai]"     # + OpenAI-backed ingest
+pip install "knowledge-worker[ollama]"     # + local Ollama ingest
+pip install "knowledge-worker[all]"        # all ingest backends + RDF exports
 ```
 
 Verify the install (no clone needed — `seed` generates its own demo graph):
@@ -102,31 +66,71 @@ install errors:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install knowledge-worker
+pip install knowledge-worker
+export MYGRAPH_PATH=/tmp/knowledge-worker-demo.jsonld 
+mykg summary
 ```
 
-### Run from a clone (no install)
+## What It Does
 
-The core demo CLI uses only the standard library, so you can run it straight
-from a checkout without installing anything:
+- Ingests markdown notes (generated from AI skill)  into candidate graph nodes and edges.
+- Generates pre-ingest deep-dive workspaces for sources that need synthesis
+  before graph promotion.
+- Requires provenance excerpts before claims become durable memory.
+- Lets you review, accept, reject, or edit LLM proposals before merge.
+- Searches by term, lists nodes by type, and finds paths between ideas.
+- Exports an LLM-ready context snapshot for a fresh chat session.
+- Audits memory shape with PageRank, betweenness, k-core, communities, weak
+  claims, and provenance coverage.
+- Generates an offline HTML graph viewer for exploration and demos.
+
+### How Memory Enters The Graph
+
+Graph memory is promoted through a review lifecycle:
+
+```text
+source note
+  -> candidates.json
+  -> validate
+  -> review
+  -> merge accepted items into MYGRAPH_PATH
+```
+
+Candidates are proposals, not memory. Validation checks schema, IDs,
+provenance excerpts, and edge endpoints. Review is the promotion gate. The
+active graph changes only after accepted candidates are merged.
+
+The product contract is:
+
+> The model proposes. Artifacts expose reasoning. Provenance verifies. Human review promotes.
+
+### Claude or Codex App, No API Key
+
+If you are already working with Claude, Codex, or ChatGPT in an app session, you do **not** need an API key. Ask the assistant to produce a `*.candidates.json` file that follows the schema in `mygraph/extractor.py`, then let the local CLI validate, review, and merge it. In Claude Code, the bundled [`/ingest-notes`](.claude/skills/ingest-notes/SKILL.md) skill runs this flow for you:
 
 ```bash
-git clone https://github.com/rahulmranga/knowledge-worker
-cd knowledge-worker
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
 
-# Run the public demo graph, no API key needed
-MYGRAPH_PATH=examples/demo_graph.jsonld python3 mygraph/mygraph.py summary
-MYGRAPH_PATH=examples/demo_graph.jsonld python3 mygraph/mygraph.py query "provenance"
-
-# Generate an LLM-ready context snapshot
-MYGRAPH_PATH=examples/demo_graph.jsonld python3 mygraph/mygraph.py context
-
-# Audit memory structure and proof coverage
-MYGRAPH_PATH=examples/demo_graph.jsonld python3 mygraph/mygraph.py audit --out /tmp/analytics.json --html /tmp/memory_audit.html
-
-# Visualize the graph as a self-contained HTML file
-python3 mygraph/mygraph.py viz --graph examples/demo_graph.jsonld --out /tmp/demo.html
+mykg ingest path/to/your/notes.md --candidates-file path/to/your/notes.candidates.json
 ```
+
+The app subscription helps you create the candidates file. The user (default) or AI gets to decide what needs to go in to the memory. 
+
+## Design Principles
+
+**Provenance first.** Every durable claim points back to a source document and literal excerpt.
+
+**Local first.** The graph is a file on your machine. No cloud sync, accounts, or telemetry.
+
+**Review before merge.** The LLM proposes. You decide. Deterministic validation runs before anything enters the graph.
+
+**Boring persistence.** Compact JSON-LD until it becomes the limiting factor. The schema stays stable across storage backends.
+
+**Open-web storage.** Local JSON-LD is the source of truth; JSONL records
+capture history, and Turtle/RDF exports let the graph participate in linked-data
+workflows without moving private memory into a hosted system. Additionally, JSON-LD, which has clear semantic markup gives AI engines like Google Gemini or Microsoft Copilot higher attribution confidence when extracting facts
 
 For the shorter `mykg` command from a clone, install it editable inside a
 virtual environment:
@@ -166,7 +170,6 @@ session and activate again:
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
-
 
 ## Commands
 
@@ -292,7 +295,7 @@ MYGRAPH_PATH=~/my-private-graph/mygraph.jsonld mykg query "architecture"
 MYGRAPH_PATH=~/my-private-graph/mygraph.jsonld mykg context
 ```
 
-Your private `mygraph.jsonld`, legacy `mygraph.json`, generated private
+Your private `mygraph.jsonld` and/or legacy `mygraph.json`, generated private
 viewers, TTL/JSON-LD exports, eval logs, state logs, and local env files are
 ignored by default.
 
@@ -358,28 +361,6 @@ Discover never mutates the graph. Derived edges land in a candidates file — a
 promotion queue for human review. AI proposes, provenance verifies, the owner
 promotes. Committed sample output: [`examples/demo_discovery.json`](examples/demo_discovery.json).
 
-## Local LLM Support
-
-The `ollama_proxy/` package adds three local-model surfaces:
-
-- `server.py`: MCP wrapper for Claude/Cowork-style tool use.
-- `proxy.py`: Ollama-compatible logging passthrough for HTTP clients.
-- `extractor_adapter.py`: drop-in extraction backend for `mykg ingest --backend ollama`.
-
-See [ollama_proxy/README.md](ollama_proxy/README.md) for setup.
-
-
-## Repository Layout
-
-```text
-mygraph/          Core CLI and pipeline modules
-examples/         Fictional demo graph, RDF exports, and HTML viewer
-docs/             Roadmap and public assets
-ollama_proxy/     Adapter, MCP server, and proxy for local Ollama workflows
-tests/            CLI smoke tests
-SPEC.md           Graph model specification
-DESIGN.md         Pipeline design notes
-```
 
 ## Contributing
 
