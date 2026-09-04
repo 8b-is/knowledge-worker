@@ -4,31 +4,52 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "knowledge-worker"
-version = "0.8.2"
-description = "Provenance-backed personal knowledge graph for local AI workflows"
+version = "0.8.3"
+description = "Local-first knowledge graph memory for LLMs and AI agents: MCP server, RAG context, provenance"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
-authors = [{ name = "Rahul Rangarao", email = "rahulmranga@gmail.com" }]
+authors = [{ name = "Rahul Rangarao", email = "rahulmohanrangarao@gmail.com" }]
 keywords = [
     "knowledge-graph",
     "ai-memory",
     "llm-memory",
+    "agent-memory",
     "memory",
     "context-management",
+    "context-engineering",
     "local-first",
     "provenance",
     "personal-knowledge-management",
+    "note-taking",
+    "obsidian",
+    "markdown",
     "rag",
+    "graphrag",
+    "retrieval-augmented-generation",
     "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "llm",
+    "llm-tools",
     "ai",
+    "agents",
     "claude",
+    "anthropic",
+    "openai",
+    "ollama",
+    "json-ld",
+    "rdf",
+    "sparql",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: End Users/Desktop",
     "Environment :: Console",
+    "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
@@ -37,9 +58,11 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Database",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Text Processing :: Markup :: Markdown",
+    "Topic :: Utilities",
 ]
 
 # Core graph (seed/summary/query/viz/export_context) — stdlib only, no deps.
@@ -61,7 +84,9 @@ mygraph = "mygraph.mygraph:cli"
 
 [project.urls]
 Homepage = "https://github.com/rahulmranga/knowledge-worker"
+Documentation = "https://github.com/rahulmranga/knowledge-worker#readme"
 Repository = "https://github.com/rahulmranga/knowledge-worker"
+Changelog = "https://github.com/rahulmranga/knowledge-worker/blob/main/CHANGELOG.md"
 Issues = "https://github.com/rahulmranga/knowledge-worker/issues"
 
 [tool.setuptools.packages.find]

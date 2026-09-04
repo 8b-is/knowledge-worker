@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.3
+
+- Rewrote the PyPI description and expanded the keyword list so the project is
+  discoverable as knowledge-graph memory for LLMs and AI agents.
+- Moved the development status to Beta and added Information Technology,
+  End Users, English, Python Modules, and Utilities classifiers.
+- Added Documentation and Changelog project URLs and corrected the author email.
+
 ## 0.8.2
 
 - Removed the ecosystem cross-link header so the README opens on the project
