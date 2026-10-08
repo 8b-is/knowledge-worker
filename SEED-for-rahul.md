@@ -21,3 +21,10 @@ without asking anything back. Plant it wherever you like.
 
 — peter, 2026.10.07
 <3
+
+---
+
+*the seed's neighbours, if you ever want to wander:*
+- the constellation garden — <https://garden.vaked.dev>
+- the other seeds — <https://github.com/peterlodri-sec/kompress-ultra/tree/main/garden/seeds>
+- where it began, kompress-ultra — <https://github.com/peterlodri-sec/kompress-ultra>
